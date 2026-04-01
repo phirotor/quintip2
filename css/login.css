@@ -1,0 +1,196 @@
+/* ---------------------------------------------
+   LOGIN / MAPA (SOLO LOGIN)
+--------------------------------------------- */
+
+/* Stage responsive */
+.map-stage{
+  position: relative;
+
+  /* clave: usa el límite entre ancho y alto */
+  width: min(96vw, calc(92vh * (800 / 530)));
+  aspect-ratio: 800 / 530;
+
+  margin: 0 auto;
+}
+
+
+@media (max-width: 768px){
+  .map-stage{
+    width: 95vw;
+    max-width: none;
+  }
+}
+
+/* Imagen de fondo del mapa */
+.map-stage > img.mapa-bg{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* no recorta */
+  display: block;
+}
+
+/* Pantalla login */
+#intro-screen{
+  position: fixed;
+  inset: 0;
+  background: #f4f1e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2vh 2vw;
+  z-index: 9999;
+}
+
+#intro-screen.exit{
+  opacity: 0;
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+/* SVG países */
+.countries{
+  position: absolute;
+  inset: 0;
+}
+
+#mapa-sudamerica{
+  width: 100%;
+  height: 100%;
+  display: block;
+
+  transform: scale(1) translateX(2.4%) translateY(1.2%);
+  transform-origin: center;
+}
+
+.country-shape{
+  pointer-events: auto;
+  cursor: pointer;
+  transition:
+    filter 0.25s ease,
+    stroke 0.25s ease,
+    transform 0.15s ease;
+}
+
+.country-shape:hover{
+  filter: drop-shadow(0 0 20px rgba(77,140,255,0.45));
+  stroke: rgba(77, 140, 255, 0.8);
+  stroke-width: 1.2;
+  transform: scale(1.01);
+}
+
+/* Qinti volando hacia el logo */
+#qinti-fly{
+  position: absolute;
+  width: 70px;
+
+  top: 40%;
+  left: -100px;
+
+  z-index: 10;
+  opacity: 1;
+
+  transition: all 2.5s ease-in-out;
+}
+
+/* ---------------------------------------------
+   QINTI (aleteo por capas)
+--------------------------------------------- */
+
+.qinti-wrap{
+  position: fixed;
+  left: -120px;
+  top: 60vh;
+  width: 180px;
+  height: 180px;
+  pointer-events: none;
+  z-index: 100001;
+}
+
+.qinti-bird{
+  position: absolute;
+  inset: 0;
+  transform: translate(-41%, -80%) scaleX(1);
+  transform-origin: center;
+  filter: drop-shadow(0 10px 14px rgba(0,0,0,0.25));
+}
+
+.qinti-bird img{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.qinti-bird .wing-left{
+  transform-origin: 55% 40%;
+  animation: flapL 0.08s linear infinite;
+  z-index: 2;
+}
+.qinti-bird .wing-right{
+  transform-origin: 45% 40%;
+  animation: flapR 0.08s linear infinite;
+  z-index: 1;
+}
+.qinti-bird .body{
+  z-index: 3;
+}
+
+@keyframes flapL{
+  0%   { transform: rotate(-14deg); }
+  50%  { transform: rotate(18deg); }
+  100% { transform: rotate(-14deg); }
+}
+
+@keyframes flapR{
+  0%   { transform: rotate(16deg); }
+  50%  { transform: rotate(-18deg); }
+  100% { transform: rotate(16deg); }
+}
+
+/* Logo del mapa (abajo, encima del mar) */
+#logo-ca{
+  position: absolute;
+  z-index: 6;
+  pointer-events: none;
+
+  width: clamp(0px, 22vw, 130px);
+  height: auto;
+
+  left: 32%;
+  top: 66%;
+  transform: translate(-50%, -50%);
+
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,0.25));
+  opacity: 0.95;
+}
+
+/* (Opcional) si usas un “anchor” para aterrizar exacto */
+.logo-wrap{
+  position: absolute;
+  left: 30%;
+  top: 68%;
+  z-index: 20;
+}
+
+#logo-anchor{
+  position: absolute;
+  left: 58%;
+  top: 6%;
+  width: 1px;
+  height: 1px;
+}
+/* Cursor SOLO en login (pisar el cursor:none global) */
+html, body,
+#intro-screen,
+#intro-screen *{
+  cursor: url("img/puntero.png") 16 16, auto !important;
+}
+
+/* Si quieres que en hover NO cambie a mano (porque .country-shape tiene cursor:pointer) */
+.country-shape{
+  cursor: inherit !important;
+}
+

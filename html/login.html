@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Proyecto Q´inti</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Tu CSS -->
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/login.css">
+
+</head>
+
+<body class="m-0">
+
+  <!-- PANTALLA PRINCIPAL -->
+  <div id="intro-screen">
+    <div class="container-fluid p-0">
+      <div class="map-stage mx-auto">
+
+        <!-- MAPA DE FONDO -->
+        <img src="../img/sudamerica2.png" class="mapa-bg" alt="Mapa Sudamérica">
+
+        <!-- SVG PAÍSES -->
+        <div class="countries">
+          <svg id="mapa-sudamerica"
+               viewBox="-2 12 800 530"
+               xmlns="http://www.w3.org/2000/svg">
+
+            <!-- AQUÍ VAN TUS DEFINES Y PATHS -->
+            <!-- (pega exactamente tu bloque defs + países aquí) -->
+              <defs>
+    <linearGradient id="banderaPeru" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#d91023" />
+      <stop offset="33%"  stop-color="#d91023" />
+      <stop offset="33%"  stop-color="#ffffff" />
+      <stop offset="66%"  stop-color="#ffffff" />
+      <stop offset="66%"  stop-color="#d91023" />
+      <stop offset="100%" stop-color="#d91023" />
+    </linearGradient>
+
+    <linearGradient id="banderaEcu" x1="0%" y1="0%" x2="0%" y2="100%">
+  <!-- Amarillo (50%) -->
+  <stop offset="0%"   stop-color="#FCDC00" />
+  <stop offset="50%"  stop-color="#FCDC00" />
+
+  <!-- Azul (25%) -->
+  <stop offset="50%"  stop-color="#0054A6" />
+  <stop offset="75%"  stop-color="#0054A6" />
+
+  <!-- Rojo (25%) -->
+  <stop offset="75%"  stop-color="#B00020" />
+  <stop offset="100%" stop-color="#B00020 " />
+</linearGradient>
+<linearGradient id="banderaBol" x1="0%" y1="0%" x2="0%" y2="100%">
+  <!-- Rojo (33.33%) -->
+  <stop offset="0%"       stop-color="#D52B1E" />
+  <stop offset="33.33%"  stop-color="#D52B1E" />
+
+  <!-- Amarillo (33.33%) -->
+  <stop offset="33.33%"  stop-color="#F9E300" />
+  <stop offset="66.66%"  stop-color="#F9E300" />
+
+  <!-- Verde (33.33%) -->
+  <stop offset="66.66%"  stop-color="#007934" />
+  <stop offset="100%"    stop-color="#007934" />
+</linearGradient>
+<linearGradient id="banderaColo" x1="0%" y1="0%" x2="0%" y2="100%">
+  <!-- Amarillo -->
+  <stop offset="0%"   stop-color="#FCD116" />
+  <stop offset="50%"  stop-color="#FCD116" />
+
+  <!-- Azul -->
+  <stop offset="50%"  stop-color="#003893" />
+  <stop offset="75%"  stop-color="#003893" />
+
+  <!-- Rojo -->
+  <stop offset="75%"  stop-color="#B00020" />
+  <stop offset="100%" stop-color="#B00020" />
+</linearGradient>
+
+  </defs>
+  <!-- PERÚ -->
+  <g class="country" data-country="peru">
+    <path class="country-shape"
+          d="m 330.4,227.4 -2.3,-1.3 -1.4,0.9 -0.2,2.9 1.2,-0.5 0.9,1.1 1.6,0.2 -0.4,1.2 2.5,0.1 0.3,-0.1 h 0.6 l -0.7,1.8 0.4,0.3 -2.2,3.6 -1.4,1.4 1.1,1.4 -2,1.6 0.6,1.5 -1,1.9 -2.6,0.7 -3.4,-2.3 -3,-1.5 -1,-2.6 -3.8,-1.4 -1.7,-1.6 -2.1,-0.5 -6.5,-2.3 -2.3,-1.5 -2.6,-0.8 -4.9,-2.4 -2.6,-2.8 -2.6,-1.3 -0.5,-1.2 -2,-1.4 0.1,-4.4 -0.4,-1.1 -4.4,-5.3 -0.4,-1.1 -2,-1.3 -0.5,-2.2 -1.2,-1.5 -2.3,-1.1 -0.4,-2.3 -2.9,-3.2 -2.7,-4.6 -0.5,-1.6 -1.5,-1.1 -1.5,-3.6 -1.8,-2.4 -3.6,-2.9 -2.2,-3.9 -3.1,-2.7 -4.8,-1.6 -2.3,-1.3 -0.5,-1.2 1.4,-0.4 0.3,-1.5 -2.7,-2.6 0.7,-1.4 -2.2,-2 0.1,-3.1 2.7,-4.1 2.6,-2.6 1.7,3.1 -2,1.1 0.9,3.1 1.6,-1.5 2.3,1 2.2,0.1 0.6,1.8 2.8,1 0.7,-1.9 1.5,-1.6 -0.3,-1.5 1.3,-4 v -2.5 l 1.1,-0.5 2,-3 7.6,-3.8 3.7,-3.6 3.2,-4.7 0.6,-4.1 1.3,0.2 -0.6,-3.1 -2.8,-2.6 2.4,-0.3 0.4,-0.6 2.9,0.6 3.2,2.5 0.7,2 3.4,2 1.7,0.2 1,2.8 2.5,0.7 0.2,2.8 1.9,1.3 2,-0.8 1.7,0.7 2.9,-1.1 1.5,-1.5 2.3,1.5 2.8,-1.5 4.5,1.6 2.2,1.4 -4.1,7.7 2.9,0.1 2.6,2.6 -1.6,0.9 -0.8,-1.1 -3.5,0.3 -0.8,1.4 -5.4,1.1 -1.9,1 -3.5,3.2 -1.9,0.9 -0.2,4 -1.4,2.6 0.9,2.3 -3.9,3.6 0.6,2.7 -1.8,1.8 2.2,1.4 1.6,3.8 2.5,2 1.6,2.3 -1.5,2.3 2.6,-0.2 3.4,0.5 1,3.1 5.2,-0.5 4.8,-3.2 0.6,9.6 2.3,0.2 2.1,-1.1 h 2.4 l 6.4,9.9 -1.7,2.5 0.2,5.8 1,3 -2.1,2.6 -0.8,2.5 1.7,1.6 z"
+          fill="url(#banderaPeru)" />
+  </g>
+
+  <!-- ECUADOR -->
+  <g class="country" data-country="ecuador">
+    <path class="country-shape"
+          d="m 251.7,151.5 -1,0.3 0.1,-2.1 2.1,-0.3 z m -1.2,3 2.4,-1.7 1,-4.6 -1.4,-3 0.3,2.6 h -1.4 l -1.4,1.9 -2.6,-1.6 -1.8,-0.4 0.9,-1.6 -1.2,-3.2 0.4,-2 -1.5,-1.7 2.3,-1.6 -0.1,-3.6 2.5,-3.4 -0.6,-5.6 3.9,-2.2 3.2,-0.7 0.9,-2.4 2,1.4 3.4,1.5 3.2,0.3 1.6,1 0.5,1.7 3.8,0.7 3.4,-0.5 0.5,-1.5 1.9,0.5 2,1.8 3.7,1 -2.4,0.3 2.8,2.6 0.6,3.1 -1.3,-0.2 -0.6,4.1 -3.2,4.7 -3.7,3.6 -7.6,3.8 -2,3 -1.1,0.5 v 2.5 l -1.3,4 0.3,1.5 -1.5,1.6 -0.7,1.9 -2.8,-1 -0.6,-1.8 -2.2,-0.1 -2.3,-1 -1.6,1.5 -0.9,-3.1 2,-1.1 zz"
+          fill="url(#banderaEcu)" />
+  </g>
+
+  <!-- COLOMBIA -->
+  <g class="country" data-country="colombia">
+    <path class="country-shape"
+          d="m 340.5,113.3 -1.3,0.5 -0.6,-3.8 -1.7,-2.6 -1.7,0.3 -2.8,2.3 -1.5,-1.8 0.4,2 -11.9,0.9 0.3,4.6 3.4,-0.3 1.8,2.8 -2.6,-0.3 -3.8,1.3 0.2,5.1 3.3,2.4 0.1,1.5 1.8,3 -2.4,21.4 -2.6,-2.6 -2.9,-0.1 4.1,-7.7 -2.2,-1.4 -4.5,-1.6 -2.8,1.5 -2.3,-1.5 -1.5,1.5 -2.9,1.1 -1.7,-0.7 -2,0.8 -1.9,-1.3 -0.2,-2.8 -2.5,-0.7 -1,-2.8 -1.7,-0.2 -3.4,-2 -0.7,-2 -3.2,-2.5 -2.9,-0.6 -0.4,0.6 -3.7,-1 -2,-1.8 -1.9,-0.5 -0.5,1.5 -3.4,0.5 -3.8,-0.7 -0.5,-1.7 -1.6,-1 -3.2,-0.3 -3.4,-1.5 -2,-1.4 -1.5,-1.3 1.1,-1.5 h 2 l -1.3,-2.8 2.2,-3.6 1.6,-0.2 3.1,-2.2 -0.6,-0.5 2.1,-3.4 0.9,-2.7 -2.9,-3.1 1.3,-2.5 -1.5,-6.5 0.9,-2.5 -2.1,-2.7 0.7,-2.8 -2.8,-2.1 -1.9,-2.4 0.7,-3.8 1.1,1.3 2.9,-3.4 -2.3,-3.6 1,-0.5 3.6,2.3 0.2,-2 -1.4,-0.9 4.7,-4.2 1,-2.7 3.3,-1.2 -0.9,-1.8 0.6,-2.1 -0.4,-2.1 0.5,-2.7 4.6,-4.6 2.5,0.6 1.4,1.5 0.9,-4.3 6.8,-0.5 3.7,-3.5 3.7,-1.8 0.5,-2.8 2.7,-0.9 0.7,-1.2 3.6,0.8 1.1,1.8 -1.5,2 -4.7,1.8 -1.8,4 -1.8,0.5 -2.6,5.5 -0.1,4.8 -2.5,5.4 2.6,-1.3 1.5,1 1.5,3.6 2.3,2.2 0.5,1.7 -1,1.3 0.6,3.8 1.9,0.3 1.1,2.3 6.6,0.2 4.4,-1.3 3.6,0.8 5.2,5.7 2.7,-0.9 3.2,0.4 7.7,-1.4 1.2,1.6 -1.2,1.6 -0.2,2.5 -1.4,1.5 0.5,1.6 -0.3,4 2,5.3 2.5,2.3 -3.6,4.1 1.5,0.4 3.2,2.8 z"
+          fill="url(#banderaColo)" />
+  </g>
+
+  <!-- BOLIVIA -->
+  <g class="country" data-country="bolivia">
+    <path class="country-shape"
+          d="m 332.3,232 0.5,-0.8 0.4,0.7 h -0.6 z m -1.9,8.4 -1.1,-1.4 1.4,-1.4 2.2,-3.6 2.5,-2.3 -1.4,0.1 0.1,-1.8 -3.8,-2.6 1.3,-1.9 -1.7,-1.6 0.8,-2.5 2.1,-2.6 -1,-3 -0.2,-5.8 1.7,-2.5 -6.4,-9.9 5.3,0.1 -0.1,0.8 3.1,-1.2 1.2,-1.9 2.4,-0.1 2.3,-2.6 1.8,-0.6 2.7,-2.5 7.6,-1.8 1,1 0.2,2.6 -0.7,1.5 0.3,4.7 1.5,3.9 1.3,1.6 3.5,1.6 0.5,1.3 3,0.6 0.8,-0.7 2.6,1.4 2,-0.2 1.8,2.2 4.1,0.8 2.1,2.7 5.1,-0.5 3.7,2.2 v 3.1 l 1.1,2.3 0.1,3.1 h -1.9 l 2.1,2.7 0.7,5.1 10.4,0.4 0.5,6.1 3.6,2 1.4,4.1 -1.6,5.6 -2.1,4.3 1.6,1.6 -1.8,1.2 v -2.2 l -5.5,-3.5 H 389 l -10.6,2.4 -1.1,2.9 -2,3.1 0.1,3.2 -2.1,7.6 -0.9,-1.5 -6.8,0.2 -1.7,3.5 -0.5,2.2 -1.6,-4.2 -2.6,-0.6 -4.3,0.3 -3.1,-2 -0.7,2.2 -2.1,0.7 -0.2,1.3 -1.5,0.7 -0.9,2 -2.1,0.6 -2,-0.2 V 273 l -0.9,-3.3 -0.7,-0.6 -0.9,-4.3 -2.3,-2.5 0.4,-1.6 -1.2,-0.7 -0.7,-2.7 1.1,-0.3 -0.8,-1.9 1.1,-1.9 -3.2,-3.1 0.2,-0.6 -1.5,-4.6 z"
+          fill="url(#banderaBol)" />
+  </g>
+          </svg>
+        </div>
+
+        <!-- LOGO (abajo izquierda) -->
+        <div id="logo-wrap" class="logo-wrap">
+          <img id="logo-ca"
+               class="logo-ca"
+               src="../img/logo-comunidad-andina.png"
+               alt="Comunidad Andina">
+
+          <!-- Punto invisible donde aterriza el qinti -->
+          <span id="logo-anchor"></span>
+        </div>
+
+        <!-- QINTI VOLADOR -->
+        <div id="qinti-splash" class="qinti-wrap" aria-hidden="true">
+          <div class="qinti-bird">
+            <img class="wing wing-left"  src="../img/quinti-wing-left.png"  alt="">
+            <img class="wing wing-right" src="../img/quinti-wing-right.png" alt="">
+            <img class="body"            src="../img/quinti-body.png"       alt="">
+          </div>
+        </div>
+
+
+
+        <!-- AUDIO -->
+        <audio id="canto" src="../sonido/canto.mp3" preload="auto"></audio>
+        <audio id="qinti-hover-sfx" src="../sonido/canto.mp3" preload="auto"></audio>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Scripts -->
+  <script src="../js/login.js"></script>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

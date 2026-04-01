@@ -1,0 +1,367 @@
+/* ---------------------------------------------
+   GENERAL (GLOBAL)
+--------------------------------------------- */
+
+body {
+  background-color: #cceeff;
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  background-size: cover;
+  background-image:none; /* <- importante */
+
+}
+.background{
+  position: relative;
+  width: 100%;
+  min-height: 100svh;               /* clave */
+  background: url("img/montanas.png") bottom center / cover no-repeat;
+  overflow: hidden;
+}
+.background{ min-height: 100vh; }
+@supports (height: 100svh){
+  .background{ min-height: 100svh; }
+}
+
+
+/* Cursor personalizado (GLOBAL) */
+#qinti-cursor{
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 80px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 2147483647;
+}
+/* Cursor SOLO en login (pisar el cursor:none global) */
+html, body,
+#intro-screen,
+#intro-screen *{
+  cursor: url("img/puntero.png") 16 16, auto !important;
+}
+@media (max-width: 600px){
+  #qinti-cursor{ width: 60px; }
+}
+a,
+button,
+.bubble,
+.nav-link,
+.country,
+.country-shape {
+  cursor: url("img/puntero-big.png") 24 24, auto;
+}
+/* ---------------------------------------------
+   HEADER / NAVBAR (GLOBAL, compatible con Bootstrap)
+--------------------------------------------- */
+
+/* Si usas el <nav class="navbar ..."> del HTML Bootstrap */
+.navbar{
+  background: #aee6ff !important;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Tu marca/logo */
+.logo{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 1.6rem;
+  color: white;
+}
+
+/* Imagen banderas */
+.banderas{
+  width: 100px;
+  height: 25px;
+  object-fit: contain;
+}
+
+/* Links (en Bootstrap son .nav-link) */
+.navbar .nav-link{
+  color: #004f73 !important;
+  font-weight: 500;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.navbar .nav-link:hover{
+  color: #0077aa !important;
+}
+
+/* El ícono hamburguesa debe verse sobre el fondo claro */
+.navbar-toggler{
+  border-color: rgba(0,79,115,0.35);
+}
+.navbar-toggler-icon{
+  filter: contrast(1.1);
+}
+
+/* Ajustes responsive del header */
+@media (max-width: 768px){
+  .logo{ font-size: 1.35rem; }
+  .banderas{ width: 86px; height: 22px; }
+}
+
+/* ---------------------------------------------
+   BACKGROUND + HOME LAYOUT (GLOBAL)
+--------------------------------------------- */
+
+/* En vez de height:100vh (en móvil se corta por barras del navegador) */
+.background{
+  position: relative;
+  width: 100%;
+  min-height: calc(100vh - 86px); /* “86px” aprox alto del navbar */
+  overflow: hidden;
+}
+
+/* Imagen de montañas si la mantienes como <img class="bg-img"> */
+.bg-img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit: cover;
+}
+
+
+
+/* ---------------------------------------------
+   TOPICS + BUBBLES (GLOBAL)
+--------------------------------------------- */
+
+.topics{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  padding-top: clamp(24px, 6vh, 80px);
+  position: relative;
+  z-index: 2; /* arriba del fondo */
+}
+
+/* Botón burbuja */
+.bubble{
+  background: #6ea8ff;
+  color: #101c57;
+  padding: 14px 30px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 900;
+  font-size: 18px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+  transition: transform 0.2s, background 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  /* responsive: que no se hagan gigantes ni se salgan */
+  width: min(560px, 92vw);
+}
+
+.bubble:hover{
+  transform: translateY(-3px);
+  background: #4d8cff;
+}
+
+/* Ajustes en móvil */
+@media (max-width: 600px){
+  .bubble{
+    font-size: 16px;
+    padding: 12px 20px;
+    border-radius: 22px;
+  }
+  .topics{
+    gap: 18px;
+  }
+}
+
+.hidden{ display:none; }
+
+/* Botón superior (bubbleTop) */
+.bubbleTop{
+  background: #35A26F;
+  color: white;
+  padding: 12px 26px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 900;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+  transition: transform 0.2s, background 0.2s;
+}
+
+.bubbleTop:hover{
+  transform: translateY(-3px);
+  background: #166C44;
+}
+.bubble img{
+  display:block;
+  margin: 0 auto;
+}
+
+.item-title{
+  margin-top: 10px;
+  font-size: 18px;
+  color: white;
+  text-align: center;
+}
+/* ---------------------------------------------
+   BUBBLES CON IMAGEN (vertical layout)
+--------------------------------------------- */
+
+.bubble {
+  display: flex;
+  flex-direction: column; /* ⬅ clave */
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 25px;
+  gap: 15px;
+}
+
+.bubble img {
+  max-width: 200px;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+.item-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+}
+
+/* En móviles reducimos un poco */
+@media (max-width: 768px) {
+  .bubble img {
+    max-width: 160px;
+  }
+
+  .item-title {
+    font-size: 18px;
+  }
+}
+/* ---------------------------------------------
+   CURSOR QINTI VOLADOR
+--------------------------------------------- */
+
+#qinti-cursor{
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 80px;
+  height: 80px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 2147483647;
+}
+
+/* Volando */
+.cursor-fly{
+  position: absolute;
+  inset: 0;
+}
+
+.cursor-fly .wing-left{
+  transform-origin: 55% 40%;
+  animation: flapL 0.08s linear infinite;
+}
+
+.cursor-fly .wing-right{
+  transform-origin: 45% 40%;
+  animation: flapR 0.08s linear infinite;
+}
+
+.cursor-fly img{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Imagen quieta */
+.cursor-hover{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: none;
+}
+
+/* Cuando está en hover */
+#qinti-cursor.hover .cursor-fly{
+  display: none;
+}
+
+#qinti-cursor.hover .cursor-hover{
+  display: block;
+}
+/* Cursor (div) */
+#qinti-cursor{
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 90px;
+  height: 90px;
+  pointer-events: none;
+  z-index: 2147483647;
+  will-change: transform;
+}
+
+
+/* Asegura que el colibrí ocupe el cursor */
+#qinti-cursor .qinti-bird,
+#qinti-cursor .cursor-hover{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Por defecto: se ve el colibrí aleteando */
+#qinti-cursor .cursor-hover{ display: none; }
+
+/* En hover: se oculta el aleteo y se ve el quinti quieto */
+#qinti-cursor.hover .qinti-bird{ display: none; }
+#qinti-cursor.hover .cursor-hover{ display: block; }
+/* ===== Cursor: anulamos transforms del sistema "splash" ===== */
+#qinti-cursor .qinti-bird{
+  transform: none !important;   /* <- esto arregla el offset */
+  inset: 0;
+}
+/* ---------------------------------------------
+   INFO BOX (para páginas tipo "Conceptos básicos")
+--------------------------------------------- */
+.info-box{
+  background-color: #F9F6E7;
+  color: #2b2b2b;
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 25px 30px;
+  border-radius: 15px;
+  border: 2px solid #6ea8ff;
+  box-shadow: 0 2px 8px rgba(110,168,255,0.2);
+  line-height: 1.6;
+}
+
+.info-box h2{
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.info-box p{
+  font-size: 16px;
+}
+.info-box ul{
+  padding-left: 1.2rem;
+  margin-bottom: 0;
+}
+
+.info-box li{
+  margin-bottom: 0.4rem;
+}
