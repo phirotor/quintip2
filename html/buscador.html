@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Buscador Q´inti</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Tu CSS -->
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    #sugerencias {
+      z-index: 1000;
+    }
+  </style>
+</head>
+
+<body class="m-0">
+
+  <!-- HEADER -->
+  <header>
+    <nav class="navbar navbar-expand-md px-3 px-md-5 py-3" style="background:#aee6ff;">
+      <div class="container-fluid p-0">
+
+        <a class="navbar-brand d-flex align-items-center gap-2 logo m-0" href="../index.html">
+          <span class="fw-bold" style="font-size:1.8rem; color:white;">Q´inti</span>
+          <img src="../img/banderas.PNG" class="banderas" style="width:100px;">
+        </a>
+
+      </div>
+    </nav>
+  </header>
+
+  <!-- MAIN -->
+  <main class="background" style="min-height:100vh;">
+    <div class="container py-5">
+
+      <!-- BUSCADOR -->
+      <div class="row justify-content-center mb-3">
+        <div class="col-12 col-md-8 col-lg-6">
+
+          <div class="d-flex gap-2">
+
+            <!-- INPUT + AUTOCOMPLETE -->
+            <div class="position-relative w-100">
+              <input 
+                type="text" 
+                id="busqueda" 
+                class="form-control" 
+                placeholder="Buscar patentes...">
+
+              <div id="sugerencias" class="list-group position-absolute w-100"></div>
+            </div>
+
+            <button onclick="buscar()" class="btn btn-dark">
+              Buscar
+            </button>
+
+          </div>
+
+        </div>
+      </div>
+
+      <!-- HISTORIAL -->
+      <div id="historial" class="mb-3 text-center"></div>
+
+      <!-- LOADING -->
+      <div id="loading" class="text-center my-4" style="display:none;">
+        <div class="spinner-border text-warning" role="status"></div>
+        <p class="mt-2">Buscando...</p>
+      </div>
+
+      <!-- RESULTADOS -->
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-8">
+          <div id="resultados" class="d-flex flex-column gap-3"></div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- JS -->
+  <script>
+    function buscar() {
+      const query = document.getElementById("busqueda").value.trim();
+      const contenedor = document.getElementById("resultados");
+      const loading = document.getElementById("loading");
+
+      if (!query) return;
+
+      // ⭐ guardar historial
+      guardarBusqueda(query);
+      mostrarHistorial();
+
+      // limpiar sugerencias
+      document.getElementById("sugerencias").innerHTML = "";
+
+      // Mostrar loading
+      contenedor.innerHTML = "";
+      loading.style.display = "block";
+
+      setTimeout(() => {
+
+        loading.style.display = "none";
+
+        const fuentes = [
+          {
+            nombre: "Espacenet",
+            url: `https://worldwide.espacenet.com/patent/search?q=${query}`
+          },
+          {
+            nombre: "Google Patents",
+            url: `https://patents.google.com/?q=${query}`
+          },
+          {
+            nombre: "USPTO",
+            url: `https://ppubs.uspto.gov/pubwebapp/static/pages/landing.html?q=${query}`
+          },
+          {
+            nombre: "PATENTSCOPE",
+            url: `https://patentscope.wipo.int/search/en/result.jsf?query=${query}`
+          }
+        ];
+
+        fuentes.forEach(f => {
+          const card = document.createElement("div");
+
+          card.className = "p-3 rounded";
+          card.style.background = "#111";
+          card.style.color = "#eee";
+          card.style.opacity = "0";
+          card.style.transform = "translateY(10px)";
+
+          card.innerHTML = `
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <strong>${f.nombre}</strong><br>
+                <small class="text-success">Búsqueda automática</small>
+              </div>
+              <a href="${f.url}" target="_blank" class="btn btn-sm btn-warning">
+                Ver resultados
+              </a>
+            </div>
+          `;
+
+          contenedor.appendChild(card);
+
+          setTimeout(() => {
+            card.style.transition = "all 0.3s ease";
+            card.style.opacity = "1";
+            card.style.transform = "translateY(0)";
+          }, 50);
+        });
+
+      }, 100);
+    }
+
+    // ⭐ HISTORIAL
+    function guardarBusqueda(q) {
+      let historial = JSON.parse(localStorage.getItem("busquedas")) || [];
+
+      if (!historial.includes(q)) {
+        historial.unshift(q);
+        if (historial.length > 5) historial.pop();
+      }
+
+      localStorage.setItem("busquedas", JSON.stringify(historial));
+    }
+
+    function mostrarHistorial() {
+      const cont = document.getElementById("historial");
+      const historial = JSON.parse(localStorage.getItem("busquedas")) || [];
+
+      cont.innerHTML = historial.map(q => `
+        <span class="badge bg-secondary me-1" style="cursor:pointer;" onclick="buscarHistorial('${q}')">
+          ${q}
+        </span>
+      `).join("");
+    }
+
+    function buscarHistorial(q) {
+      document.getElementById("busqueda").value = q;
+      buscar();
+    }
+
+    // 🧠 AUTOCOMPLETE
+    const sugerenciasBase = [
+      "inteligencia artificial",
+      "robotica",
+      "energia solar",
+      "biotecnologia",
+      "blockchain",
+      "drones"
+    ];
+
+    document.getElementById("busqueda").addEventListener("input", function() {
+      const valor = this.value.toLowerCase();
+      const cont = document.getElementById("sugerencias");
+
+      if (!valor) {
+        cont.innerHTML = "";
+        return;
+      }
+
+      const filtradas = sugerenciasBase.filter(s => s.includes(valor));
+
+      cont.innerHTML = filtradas.map(s => `
+        <button class="list-group-item list-group-item-action" onclick="seleccionar('${s}')">
+          ${s}
+        </button>
+      `).join("");
+    });
+
+    function seleccionar(texto) {
+      document.getElementById("busqueda").value = texto;
+      document.getElementById("sugerencias").innerHTML = "";
+    }
+
+    // ENTER
+    document.getElementById("busqueda").addEventListener("keypress", function(e) {
+      if (e.key === "Enter") buscar();
+    });
+
+    // INIT
+    mostrarHistorial();
+  </script>
+
+  <!-- Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
