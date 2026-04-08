@@ -37,7 +37,7 @@
             <li class="nav-item"><a class="nav-link" href="#" style="color:#004f73; font-weight:500;">Inicio</a></li>
             <li class="nav-item"><a class="nav-link" href="#" style="color:#004f73; font-weight:500;">Guía</a></li>
             <li class="nav-item"><a class="nav-link" href="#" style="color:#004f73; font-weight:500;">Temas</a></li>
-            <li class="nav-item"><a class="nav-link" href="#" style="color:#004f73; font-weight:500;">Recursos</a></li>
+            <li class="nav-item"><a class="nav-link" href="buscador.html" style="color:#004f73; font-weight:500;">Buscador</a></li>
           </ul>
         </div>
 
@@ -53,29 +53,50 @@
            pero lo dejo porque tú lo tenías -->
 
       <!-- Topics centrado y responsive -->
-      <div class="container py-5">
-        <div class="topics d-flex flex-column align-items-center gap-4 gap-md-5 mt-4">
+<div class="tree">
 
-          <a href="../html/propiedadIntelectual/propiedad-industrial.html"
-             class="bubble text-decoration-none text-center">
-            Propiedad industrial
-          </a>
+  <!-- Nodo principal -->
+  <div class="tree-top">
+    <a href="#" class="bubbleTop">Propiedad intelectual</a>
+  </div>
 
-          <a href="../html/derechosDeAutor/DerechosDeAutor.html"
-             class="bubble text-decoration-none text-center">
-            Derechos de autor
-          </a>
+  <!-- Línea horizontal -->
+  <div class="tree-line"></div>
 
-          <a href="derechoSuiGe/"
-             class="bubble text-decoration-none text-center">
-            Derecho sui generis
-          </a>
-          <a href="../html/buscador.html"
-             class="bubble text-decoration-none text-center">
-            Buscador
-          </a>
-        </div>
-      </div>
+  <!-- Segunda fila -->
+  <div class="tree-middle">
+
+    <!-- Propiedad industrial (con hijos) -->
+<div class="tree-branch">
+
+  <div class="bubble has-children">
+    Propiedad industrial
+
+    <!-- botón de ir -->
+    <a href="../html/propiedadIntelectual/propiedad-industrial.html"
+       class="go-link">→</a>
+  </div>
+
+  <div class="tree-children collapsed">
+    <a href="#" class="bubble small">Nuevas creaciones</a>
+    <a href="#" class="bubble small">Signos distintivos</a>
+  </div>
+
+</div>
+
+    <!-- Derechos de autor -->
+    <a href="../html/derechosDeAutor/DerechosDeAutor.html" class="bubble">
+      Derechos de autor
+    </a>
+
+    <!-- Sui generis -->
+    <a href="derechoSuiGe/" class="bubble">
+      Derecho sui generis
+    </a>
+
+  </div>
+
+</div>
     </div>
   </main>
 

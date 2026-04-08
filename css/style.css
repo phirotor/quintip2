@@ -365,3 +365,123 @@ button,
 .info-box li{
   margin-bottom: 0.4rem;
 }
+.tree{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+}
+
+/* TOP */
+.tree-top{
+  position: relative;
+}
+
+/* Línea horizontal principal */
+.tree-line{
+  width: 70%;
+  height: 2px;
+  background: #444;
+  margin: 20px 0 40px;
+}
+
+/* Segunda fila */
+.tree-middle{
+  display: flex;
+  justify-content: center;
+  gap: 80px;
+  align-items: flex-start;
+}
+
+/* Rama con hijos */
+.tree-branch{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+/* Línea vertical desde propiedad industrial */
+.tree-branch::after{
+  content: "";
+  width: 2px;
+  height: 30px;
+  background: #444;
+  margin-top: 5px;
+}
+
+/* Hijos */
+.tree-children{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 10px;
+  position: relative;
+}
+
+/* Línea que conecta a los hijos */
+.tree-children::before{
+  content: "";
+  position: absolute;
+  top: -15px;
+  width: 2px;
+  height: 15px;
+  background: #444;
+}
+
+/* Sub-burbujas */
+.bubble.small{
+  font-size: 14px;
+  padding: 10px 18px;
+}
+/* Animación suave */
+.tree-children{
+  transition: all 0.3s ease;
+}
+
+/* Estado colapsado */
+.tree-children.collapsed{
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+/* Estado abierto */
+.tree-children.open{
+  max-height: 200px;
+  opacity: 1;
+}
+
+/* En desktop SIEMPRE visible */
+@media (min-width: 768px){
+  .tree-children{
+    max-height: none !important;
+    opacity: 1 !important;
+  }
+}
+@media (max-width: 768px){
+
+  .tree-middle{
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+  }
+
+  .tree-line{
+    display: none; /* ocultamos línea horizontal */
+  }
+
+}
+.go-link{
+  margin-left: 10px;
+  font-size: 14px;
+  text-decoration: none;
+  color: white;
+  background: rgba(0,0,0,0.2);
+  padding: 4px 8px;
+  border-radius: 10px;
+}
+
+.go-link:hover{
+  background: rgba(0,0,0,0.4);
+}
