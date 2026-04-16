@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="es">
 <head>
+  <base href="/quintip2/">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Proyecto Q´inti</title>
@@ -9,18 +10,18 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Tu CSS -->
-  <link rel="stylesheet" href="../../../css/style.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-  <!-- NAVBAR (Bootstrap) -->
+  <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg">
     <div class="container-fluid px-3 px-md-5">
 
       <a class="navbar-brand d-flex align-items-center gap-2 logo m-0 text-decoration-none" href="#">
         <span>Q´inti</span>
-        <img src="../../../img/banderas.PNG" alt="Banderas" class="banderas">
+        <img src="img/banderas.PNG" alt="Banderas" class="banderas">
       </a>
 
       <button class="navbar-toggler" type="button"
@@ -43,14 +44,13 @@
 
   <!-- CONTENIDO -->
   <main class="background">
-    <button onclick="history.back()">← Volver</button>
-
-    <div class="container py-4 py-md-5 position-relative" style="z-index:2;">
+    <div class="container py-4 py-md-5">
 
       <!-- Botón superior -->
       <div class="text-center mb-4">
-        <a href="../../../html/propiedadIntelectual/propiedad-industrial.html" class="bubbleTop d-inline-block">
-          Invenciones y nuevas tecnologías
+        <a href="html/derechosDeAutor/Recursos/Recursos.html"
+           class="bubbleTop d-inline-block">
+          Comunidad Andina
         </a>
       </div>
 
@@ -58,31 +58,36 @@
       <div class="row g-3 g-md-4 justify-content-center">
 
         <div class="col-12 col-sm-10 col-md-6 col-lg-5">
-          <a href="../../../html/propiedadIntelectual/InvencionN/patentes.html" class="bubble w-100 text-decoration-none">Patentes de invencion
-            <img src="../../../img/InvenNueva/inventos.png" width="200" alt="Inventos">
+          <a href="html/derechosDeAutor/Recursos/ComunidadAndina/Guia.html"
+             class="bubble w-100 text-decoration-none">
+            <img src="img/iconodefaut.jpg" width="200" alt="Guías">
+            <span class="item-title">Guías</span>
           </a>
         </div>
 
         <div class="col-12 col-sm-10 col-md-6 col-lg-5">
-          <a href="../../../html/propiedadIntelectual/InvencionN/modelos.html" class="bubble w-100 text-decoration-none">Modelos de Utilidad
-            <img src="../../../img/InvenNueva/diseno.png" width="200" alt="Diseños industriales">
+          <a href="html/derechosDeAutor/Recursos/ComunidadAndina/Formatos.html"
+             class="bubble w-100 text-decoration-none">
+            <img src="img/iconodefaut.jpg" width="200" alt="Formatos">
+            <span class="item-title">Formatos</span>
           </a>
         </div>
+
         <div class="col-12 col-sm-10 col-md-6 col-lg-5">
-          <a href="../../../html/propiedadIntelectual/InvencionN/diseñoIndustrial.html" class="bubble w-100 text-decoration-none">Diseño industrial
-            <img src="../../../img/InvenNueva/diseno.png" width="200" alt="Diseños industriales">
+          <a href="html/derechosDeAutor/Recursos/ComunidadAndina/Videos.html"
+             class="bubble w-100 text-decoration-none">
+            <img src="img/iconodefaut.jpg" width="200" alt="Videos">
+            <span class="item-title">Videos</span>
           </a>
         </div>
-        <div class="col-12 col-sm-10 col-md-6 col-lg-5">
-          <a href="../../../html/propiedadIntelectual/InvencionN/diseñoIntegrado.html" class="bubble w-100 text-decoration-none">Diseño integrado
-            <img src="../../../img/InvenNueva/diseno.png" width="200" alt="Diseños industriales">
-          </a>
-        </div>
+
       </div>
 
     </div>
   </main>
 
+  <!-- Cursor -->
+  <img src="img/quinti.png" id="qinti-cursor" alt="Qinti" />
 
   <!-- Scripts -->
   <script src="js/quinti.js"></script>

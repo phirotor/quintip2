@@ -41,7 +41,7 @@
     </div>
   </nav>
 
-  <!-- CONTENIDO -->
+ <!-- CONTENIDO -->
   <main class="background">
     <div class="container py-4 py-md-5">
 
@@ -53,41 +53,114 @@
         </a>
       </div>
 
-      <!-- Info centrada -->
-      <div class="row justify-content-center">
-        <div class="col-12 col-lg-10 col-xl-9">
+      <!-- Tabs -->
+      <ul class="nav nav-tabs justify-content-center" id="lemaTabs" role="tablist">
+        <li class="nav-item">
+          <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#conceptos">
+            Conceptos básicos
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" data-bs-toggle="tab" data-bs-target="#recursos">
+            Recursos
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" data-bs-toggle="tab" data-bs-target="#base">
+            Base de datos
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" data-bs-toggle="tab" data-bs-target="#normativa">
+            Normativa
+          </button>
+        </li>
+      </ul>
 
-          <section class="info-box">
+      <!-- Contenido de tabs -->
+      <div class="tab-content mt-4">
 
-            <h2>¿Qué es una denominación de origen?</h2>
+        <!-- CONCEPTOS -->
+        <div class="tab-pane fade show active" id="conceptos">
+          <div class="row justify-content-center">
+            <div class="col-12 col-lg-10 col-xl-9">
+              <section class="info-box">
+                <h2>¿Qué es una denominación de origen?</h2>
 
-            <p>
-            La <strong>denominación de origen</strong> es un signo que identifica un
-            producto que proviene de un lugar geográfico específico y cuyas
-            características o calidad se deben principalmente a ese lugar.
-            </p>
+                <p>
+                La <strong>denominación de origen</strong> es un signo que identifica un
+                producto que proviene de un lugar geográfico específico y cuyas
+                características o calidad se deben principalmente a ese lugar.
+                </p>
 
-            <p>
-            Esto significa que ciertos productos solo pueden usar esa denominación
-            si realmente se producen en la región indicada y siguen las condiciones
-            tradicionales de producción.
-            </p>
+                <p>
+                Esto significa que ciertos productos solo pueden usar esa denominación
+                si realmente se producen en la región indicada y siguen las condiciones
+                tradicionales de producción.
+                </p>
 
-            <p>
-            Un ejemplo conocido en el Perú es el <strong>Pisco</strong>, cuya denominación
-            de origen protege a la bebida producida en determinadas regiones del país
-            siguiendo métodos específicos.
-            </p>
+                <p>
+                Un ejemplo conocido en el Perú es el <strong>Pisco</strong>, cuya denominación
+                de origen protege a la bebida producida en determinadas regiones del país
+                siguiendo métodos específicos.
+                </p>
 
-            <p>
-            La denominación de origen protege tanto a los productores como a los
-            consumidores, ya que garantiza la autenticidad del producto y evita que
-            otros utilicen el nombre de manera incorrecta.
-            </p>
-
-          </section>
-
+                <p>
+                La denominación de origen protege tanto a los productores como a los
+                consumidores, ya que garantiza la autenticidad del producto y evita que
+                otros utilicen el nombre de manera incorrecta.
+                </p>
+              </section>
+            </div>
+          </div>
         </div>
+
+        <!-- RECURSOS -->
+<div class="tab-pane fade" id="recursos">
+
+  <div class="row g-3">
+
+    <div class="col-12 col-md-4">
+      <div class="info-box text-center">
+        <h3>Guías</h3>
+        <p>Material explicativo paso a paso.</p>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-4">
+      <div class="info-box text-center">
+        <h3>Videos</h3>
+        <p>Contenido audiovisual educativo.</p>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-4">
+      <div class="info-box text-center">
+        <h3>Formatos</h3>
+        <p>Documentos y plantillas.</p>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+        <!-- BASE DE DATOS -->
+        <div class="tab-pane fade" id="base">
+          <div class="info-box text-center">
+            <h2>Base de datos</h2>
+            <p>Aquí podrás consultar información relevante.</p>
+          </div>
+        </div>
+
+        <!-- NORMATIVA -->
+        <div class="tab-pane fade" id="normativa">
+          <div class="info-box text-center">
+            <h2>Normativa</h2>
+            <p>Aquí se mostrará la legislación aplicable.</p>
+          </div>
+        </div>
+
       </div>
 
     </div>

@@ -364,33 +364,67 @@ button,
 
 .info-box li{
   margin-bottom: 0.4rem;
-}
+}/* =========================
+   🌳 TREE (ARREGLADO)
+========================= */
+
 .tree{
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 50px;
+  margin-top: 30px;
 }
 
-/* TOP */
+/* Nodo superior */
 .tree-top{
   position: relative;
 }
 
-/* Línea horizontal principal */
-.tree-line{
-  width: 70%;
-  height: 2px;
-  background: #444;
-  margin: 20px 0 40px;
+/* Línea hacia abajo desde el nodo superior */
+.tree-top::after{
+  content: "";
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3px;
+  height: 20px;
+  background: #2c5f7a;
+  border-radius: 2px;
 }
 
-/* Segunda fila */
+/* Línea horizontal principal */
+.tree-line{
+  width: 60%;
+  height: 3px;
+  background: #2c5f7a;
+  margin: 0 auto 20px;
+  border-radius: 2px;
+}
+
+/* Contenedor de nodos */
 .tree-middle{
   display: flex;
   justify-content: center;
-  gap: 80px;
+  gap: 40px;
   align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+/* Cada nodo se conecta a la línea */
+.tree-middle > *{
+  position: relative;
+}
+
+.tree-middle > *::before{
+  content: "";
+  position: absolute;
+  top: -25px;
+  bottom: 100%;
+  left: 50%;
+  width: 3px;
+  transform: translateX(-50%);
+  background: #2c5f7a;
 }
 
 /* Rama con hijos */
@@ -401,42 +435,40 @@ button,
   position: relative;
 }
 
-/* Línea vertical desde propiedad industrial */
+/* Línea hacia hijos */
 .tree-branch::after{
   content: "";
-  width: 2px;
-  height: 30px;
-  background: #444;
-  margin-top: 5px;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3px;
+  height: 25px;
+  background: #2c5f7a;
+  border-radius: 2px;
 }
 
-/* Hijos */
+/* Contenedor hijos */
 .tree-children{
   display: flex;
   flex-direction: column;
   gap: 15px;
   margin-top: 10px;
   position: relative;
+  transition: all 0.3s ease;
 }
 
-/* Línea que conecta a los hijos */
+/* Línea que conecta hijos */
 .tree-children::before{
   content: "";
   position: absolute;
   top: -15px;
-  width: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3px;
   height: 15px;
-  background: #444;
-}
-
-/* Sub-burbujas */
-.bubble.small{
-  font-size: 14px;
-  padding: 10px 18px;
-}
-/* Animación suave */
-.tree-children{
-  transition: all 0.3s ease;
+  background: #2c5f7a;
+  border-radius: 2px;
 }
 
 /* Estado colapsado */
@@ -452,15 +484,25 @@ button,
   opacity: 1;
 }
 
-/* En desktop SIEMPRE visible */
-@media (min-width: 768px){
-  .tree-children{
-    max-height: none !important;
-    opacity: 1 !important;
+/* Tamaño de burbujas en árbol */
+.tree .bubble{
+  width: min(260px, 85vw);
+}
+
+/* Sub-burbujas */
+.bubble.small{
+  font-size: 14px;
+  padding: 10px 18px;
+}
+
+/* Responsive */
+@media (max-width: 1200px){
+  .tree-middle{
+    gap: 30px;
   }
 }
-@media (max-width: 768px){
 
+@media (max-width: 768px){
   .tree-middle{
     flex-direction: column;
     gap: 30px;
@@ -468,20 +510,28 @@ button,
   }
 
   .tree-line{
-    display: none; /* ocultamos línea horizontal */
+    display: none; /* en móvil se simplifica */
+  }
+}
+/* Hover (desktop) */
+@media (min-width: 768px){
+  .tree-branch:hover .tree-children{
+    max-height: 200px;
+    opacity: 1;
+  }
+}
+
+/* Click (JS) */
+.tree-children.open{
+  max-height: 200px;
+  opacity: 1;
+}
+@media (max-width: 768px){
+  .tree{
+    margin-top: 50px;
   }
 
-}
-.go-link{
-  margin-left: 10px;
-  font-size: 14px;
-  text-decoration: none;
-  color: white;
-  background: rgba(0,0,0,0.2);
-  padding: 4px 8px;
-  border-radius: 10px;
-}
-
-.go-link:hover{
-  background: rgba(0,0,0,0.4);
+  .tree-top{
+    margin-bottom: 30px;
+  }
 }
