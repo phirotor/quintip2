@@ -96,7 +96,17 @@ button,
 .navbar-toggler-icon{
   filter: contrast(1.1);
 }
+.go-link {
+    font-size: 32px;          /* hace la flecha más grande */
+    text-decoration: none;    /* quita el subrayado */
+    transition: all 0.2s ease;
+    display: inline-block;    /* necesario para animaciones */
+}
 
+.go-link:hover {
+    transform: scale(1.3);    /* agranda al pasar el mouse */
+    color: #ff6600;           /* cambia color */
+}
 /* Ajustes responsive del header */
 @media (max-width: 768px){
   .logo{ font-size: 1.35rem; }
@@ -397,8 +407,8 @@ button,
 .tree-line{
   width: 60%;
   height: 3px;
-  background: #2c5f7a;
-  margin: 0 auto 20px;
+  /* background: #2c5f7a;*/
+  margin: 0 auto 40px;
   border-radius: 2px;
 }
 
@@ -534,4 +544,19 @@ button,
   .tree-top{
     margin-bottom: 30px;
   }
+}
+.doc-link{
+  display: block;
+  margin-top: 12px;
+  padding: 10px 16px;
+  background: #2c7be5;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.doc-link:hover{
+  background: #1a5edb;
+  transform: scale(1.05);
 }

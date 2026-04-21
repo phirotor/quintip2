@@ -102,8 +102,10 @@
   position: fixed;
   left: -120px;
   top: 60vh;
-  width: 180px;
-  height: 180px;
+
+  width: clamp(200px, 18vw, 180px);
+  height: clamp(80px, 18vw, 180px);
+
   pointer-events: none;
   z-index: 100001;
 }
@@ -166,7 +168,28 @@
   filter: drop-shadow(0 8px 18px rgba(0,0,0,0.25));
   opacity: 0.95;
 }
+@media (max-width: 768px){
+  #logo-ca{
+    top: 12%;              /* lo subes */
+    left: 50%;             /* centrado */
+    transform: translate(-50%, -50%);
+    
+    width: clamp(60px, 20vw, 110px); /* opcional: un poco más pequeño */
+  }
 
+  .logo-wrap{
+    left: 50%;
+    top: 12%;
+    transform: translate(-50%, -50%);
+  }
+}
+@media (max-width: 768px){
+  .qinti-wrap{
+    top: 18vh;   /* arriba pero no pegado */
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
 /* (Opcional) si usas un “anchor” para aterrizar exacto */
 .logo-wrap{
   position: absolute;
@@ -181,6 +204,13 @@
   top: 6%;
   width: 1px;
   height: 1px;
+}
+@media (max-width: 768px){
+  #logo-anchor{
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
 /* Cursor SOLO en login (pisar el cursor:none global) */
 html, body,
