@@ -15,8 +15,9 @@ document.querySelectorAll('.has-children').forEach(item => {
   });
 });
 
-fetch("/components/header.html")
-  .then(response => response.text())
+fetch("/quintip2/components/header.html")
+  .then(res => res.text())
   .then(data => {
     document.getElementById("header").innerHTML = data;
-  });
+  })
+  .catch(error => console.error("Error cargando header:", error));
