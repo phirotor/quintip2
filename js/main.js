@@ -21,3 +21,11 @@ fetch("/quintip2/components/header.html")
     document.getElementById("header").innerHTML = data;
   })
   .catch(error => console.error("Error cargando header:", error));
+
+  function goBack() {
+  if (document.referrer) {
+    history.back();
+  } else {
+    window.location.href = "/quintip2/";
+  }
+}
