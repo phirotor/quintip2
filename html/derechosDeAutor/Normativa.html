@@ -14,47 +14,177 @@
 
 <body>
 
- <div id="header"></div>
-
+  <!-- NAVBAR -->
+<div id="header"></div>
+>
 
   <!-- CONTENIDO -->
   <main class="background">
+
     <div class="container py-4 py-md-5">
 
-      <!-- Botón superior -->
+      <!-- Título -->
       <div class="text-center mb-4">
-        <a href="html/derechosDeAutor/DerechosDeAutor.html"
-           class="bubbleTop d-inline-block">
+        <a href="#" class="bubbleTop d-inline-block">
           Normativa
         </a>
       </div>
 
-      <!-- Grid responsive -->
-      <div class="row g-3 g-md-4 justify-content-center">
+      <!-- Tabs -->
+      <ul class="nav nav-tabs justify-content-center" id="normativaTabs" role="tablist">
 
-        <div class="col-12 col-sm-10 col-md-6 col-lg-5">
-          <a href="https://www.wipo.int/es/web/copyright#law"
-             class="bubble w-100 text-decoration-none">
-            <img src="../../img/normativa/internacion.png" width="200" alt="Internacional">
-          </a>
+        <li class="nav-item">
+          <button class="nav-link active"
+                  data-bs-toggle="tab"
+                  data-bs-target="#nacional"
+                  type="button">
+            Normativa Nacional
+          </button>
+        </li>
+
+        <li class="nav-item">
+          <button class="nav-link"
+                  data-bs-toggle="tab"
+                  data-bs-target="#internacional"
+                  type="button">
+            Normativa Internacional
+          </button>
+        </li>
+
+      </ul>
+
+      <!-- Contenido Tabs -->
+      <div class="tab-content mt-4">
+
+        <!-- NACIONAL -->
+        <div class="tab-pane fade show active" id="nacional">
+
+          <section class="info-box">
+
+            <details open>
+
+              <summary class="h4 mb-3" style="cursor:pointer;">
+                Normativa Nacional
+              </summary>
+
+              <div class="text-start mt-3">
+
+                <p>
+                  La normativa nacional está conformada por las leyes,
+                  decretos y reglamentos emitidos por el Estado peruano
+                  para regular la protección de la propiedad intelectual.
+                </p>
+
+                <p>
+                  Estas disposiciones establecen los procedimientos de registro,
+                  los derechos de los titulares y los mecanismos de protección
+                  frente al uso no autorizado de creaciones intelectuales.
+                </p>
+
+                <h3 class="h5 mt-4">Principales normas</h3>
+
+                <a href="#"
+                   target="_blank"
+                   class="doc-link">
+                   Decreto Legislativo N.º 822 – Ley sobre el Derecho de Autor
+                </a>
+
+                <a href="#"
+                   target="_blank"
+                   class="doc-link">
+                   Decreto Legislativo N.º 1075 – Disposiciones Complementarias a la Decisión 486
+                </a>
+
+                <a href="#"
+                   target="_blank"
+                   class="doc-link">
+                   Decreto Legislativo N.º 823 – Ley de Propiedad Industrial
+                </a>
+
+              </div>
+
+            </details>
+
+          </section>
+
         </div>
 
-        <div class="col-12 col-sm-10 col-md-6 col-lg-5">
-          <a href="https://cdn.www.gob.pe/uploads/document/file/1669698/DL%20822.pdf.pdf?v=1613082608"
-             class="bubble w-100 text-decoration-none">
-            <img src="../../img/normativa/nacional.png" width="200" alt="Nacional">
-          </a>
+        <!-- INTERNACIONAL -->
+        <div class="tab-pane fade" id="internacional">
+
+          <section class="info-box">
+
+            <details open>
+
+              <summary class="h4 mb-3" style="cursor:pointer;">
+                Normativa Internacional
+              </summary>
+
+              <div class="text-start mt-3">
+
+                <p>
+                  El Perú forma parte de diversos tratados y convenios
+                  internacionales relacionados con la protección de la
+                  propiedad intelectual.
+                </p>
+
+                <p>
+                  Estos instrumentos buscan armonizar las normas entre
+                  países y facilitar la protección de las creaciones
+                  intelectuales a nivel internacional.
+                </p>
+
+                <h3 class="h5 mt-4">Principales tratados y convenios</h3>
+
+                <a href="#"
+                   target="_blank"
+                   class="doc-link">
+                   Convenio de París para la Protección de la Propiedad Industrial
+                </a>
+
+                <a href="#"
+                   target="_blank"
+                   class="doc-link">
+                   Convenio de Berna para la Protección de las Obras Literarias y Artísticas
+                </a>
+
+                <a href="#"
+                   target="_blank"
+                   class="doc-link">
+                   Acuerdo sobre los ADPIC (TRIPS)
+                </a>
+
+                <a href="#"
+                   target="_blank"
+                   class="doc-link">
+                   Tratados administrados por la OMPI
+                </a>
+
+                <a href="#"
+                   target="_blank"
+                   class="doc-link">
+                   Decisión 486 de la Comunidad Andina
+                </a>
+
+              </div>
+
+            </details>
+
+          </section>
+
         </div>
 
       </div>
 
     </div>
+
   </main>
 
+  <!-- Cursor -->
+  <img src="../img/quinti.png" id="qinti-cursor" alt="Qinti" />
 
   <!-- Scripts -->
-<script src="/quintip2/js/quinti.js"></script>
-<script src="/quintip2/js/main.js"></script>
+  <script src="../js/quinti.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
