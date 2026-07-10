@@ -165,7 +165,15 @@ button,
   align-items: center;
   justify-content: center;
   text-align: center;
+      width: 340px;
+    min-height: 140px;
 
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    border-radius:30px;
+    font-size:22px;
   /* responsive: que no se hagan gigantes ni se salgan */
   width: min(560px, 92vw);
 }
