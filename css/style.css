@@ -200,13 +200,23 @@ button,
 /* Botón superior (bubbleTop) */
 .bubbleTop{
   background: #35A26F;
-  color: white;
-  padding: 12px 26px;
-  border-radius: 25px;
-  text-decoration: none;
-  font-weight: 900;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
-  transition: transform 0.2s, background 0.2s;
+    width: 360px;
+    min-height: 170px;
+
+    border-radius: 30px;
+
+    font-size: 22px;
+    font-weight: 900;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    text-decoration: none;
+    color: white;
+    padding:25px;
+
+    box-shadow:0 8px 18px rgba(0,0,0,.20);
 }
 
 .bubbleTop:hover{
@@ -387,10 +397,12 @@ button,
 ========================= */
 
 .tree{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 30px;
+    min-height: calc(100vh - 86px); /* resta el header */
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Nodo superior */
@@ -407,7 +419,7 @@ button,
   transform: translateX(-50%);
   width: 3px;
   height: 20px;
-  background: #2c5f7a;
+  background: transparent;
   border-radius: 2px;
 }
 
@@ -442,7 +454,7 @@ button,
   left: 50%;
   width: 3px;
   transform: translateX(-50%);
-  background: #2c5f7a;
+  background: transparent;
 }
 
 /* Rama con hijos */
@@ -462,7 +474,7 @@ button,
   transform: translateX(-50%);
   width: 3px;
   height: 25px;
-  background: #2c5f7a;
+  background: transparent;
   border-radius: 2px;
 }
 
@@ -485,7 +497,7 @@ button,
   transform: translateX(-50%);
   width: 3px;
   height: 15px;
-  background: #2c5f7a;
+  background: transparent;
   border-radius: 2px;
 }
 
