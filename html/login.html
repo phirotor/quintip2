@@ -1,90 +1,242 @@
 <!doctype html>
-
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Proyecto Q'inti</title>
+  <title>Proyecto Q´inti</title>
 
   <style>
+
     html,
     body {
       margin: 0;
       padding: 0;
+
       width: 100%;
       height: 100%;
-      background: black;
+
+      background: #000;
+
       overflow: hidden;
     }
 
-    .video-container {
-      width: 100vw;
-      height: 100vh;
-      background: black;
+
+    /* =====================================
+       PANTALLA DE INICIO
+    ===================================== */
+
+    #start-screen {
+
+      position: fixed;
+
+      inset: 0;
+
+      z-index: 10;
+
+      background: #000;
+
+      display: flex;
+
+      justify-content: center;
+
+      align-items: center;
+
+      cursor: pointer;
     }
 
+
+    .start-content {
+
+      text-align: center;
+
+      color: white;
+    }
+
+
+    .start-title {
+
+      font-size: 2.5rem;
+
+      margin-bottom: 25px;
+
+      font-weight: bold;
+    }
+
+
+    .start-button {
+
+      display: inline-flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      gap: 10px;
+
+      padding: 14px 28px;
+
+      border-radius: 50px;
+
+      background: #aee6ff;
+
+      color: #004f73;
+
+      font-size: 1.2rem;
+
+      font-weight: 600;
+
+      box-shadow:
+        0 5px 20px rgba(174, 230, 255, 0.35);
+
+      transition: 0.2s;
+    }
+
+
+    .start-button:hover {
+
+      transform: scale(1.05);
+
+      background: #8bdcff;
+    }
+
+
+    /* =====================================
+       VIDEOS
+    ===================================== */
+
+    .video-container {
+
+      width: 100vw;
+
+      height: 100vh;
+
+      background: #000;
+    }
+
+
     video {
+
       width: 100%;
+
       height: 100%;
+
       object-fit: contain;
+
       display: none;
     }
+
   </style>
 
 </head>
 
+
 <body>
 
-  <div class="video-container">
 
-```
-<!-- VIDEO HORIZONTAL -->
-<video
-  id="video-horizontal"
-  autoplay
-  playsinline
-  preload="auto">
-  <source src="../videos/horizon.mp4" type="video/mp4">
-</video>
+  <!-- =====================================
+       PANTALLA PARA INICIAR
+  ===================================== -->
 
-<!-- VIDEO VERTICAL -->
-<video
-  id="video-vertical"
-  autoplay
-  playsinline
-  preload="auto">
-  <source src="../videos/vert.mp4" type="video/mp4">
-</video>
-```
+  <div id="start-screen">
+
+    <div class="start-content">
+
+      <div class="start-title">
+        Proyecto Q´inti
+      </div>
+
+      <div class="start-button">
+
+        <span>▶</span>
+
+        <span>Comenzar</span>
+
+      </div>
+
+    </div>
 
   </div>
 
+
+
+  <!-- =====================================
+       VIDEOS
+  ===================================== -->
+
+  <div class="video-container">
+
+    <!-- Horizontal -->
+
+    <video
+      id="video-horizontal"
+      playsinline
+      preload="auto">
+
+      <source
+        src="../videos/horizon.mp4"
+        type="video/mp4">
+
+    </video>
+
+
+    <!-- Vertical -->
+
+    <video
+      id="video-vertical"
+      playsinline
+      preload="auto">
+
+      <source
+        src="../videos/vert.mp4"
+        type="video/mp4">
+
+    </video>
+
+  </div>
+
+
+
   <script>
 
-    const videoHorizontal = document.getElementById("video-horizontal");
-    const videoVertical = document.getElementById("video-vertical");
+    const startScreen =
+      document.getElementById("start-screen");
+
+    const videoHorizontal =
+      document.getElementById("video-horizontal");
+
+    const videoVertical =
+      document.getElementById("video-vertical");
+
 
     let videoSeleccionado = null;
 
+
+    /* =====================================
+       SELECCIONAR VIDEO
+    ===================================== */
+
     function seleccionarVideo() {
 
-      // Pantalla horizontal
       if (window.innerWidth > window.innerHeight) {
 
+        // Horizontal
+
         videoHorizontal.style.display = "block";
+
         videoVertical.style.display = "none";
 
         videoVertical.pause();
 
         videoSeleccionado = videoHorizontal;
 
-      }
+      } else {
 
-      // Pantalla vertical
-      else {
+        // Vertical
 
         videoHorizontal.style.display = "none";
+
         videoVertical.style.display = "block";
 
         videoHorizontal.pause();
@@ -93,28 +245,74 @@
 
       }
 
-      videoSeleccionado.play().catch(error => {
-        console.log("El navegador bloqueó el autoplay:", error);
-      });
     }
 
-    seleccionarVideo();
+
+    /* =====================================
+       INICIAR
+    ===================================== */
+
+    startScreen.addEventListener("click", function() {
+
+      seleccionarVideo();
 
 
-    // Si cambia la orientación de la pantalla
-    window.addEventListener("resize", seleccionarVideo);
+      // Ocultar pantalla inicial
+
+      startScreen.style.display = "none";
 
 
-    // Cuando termine el video → index.html
-    videoHorizontal.addEventListener("ended", irAlIndex);
-    videoVertical.addEventListener("ended", irAlIndex);
+      // Reproducir video con sonido
+
+      videoSeleccionado
+        .play()
+        .catch(error => {
+
+          console.log(
+            "No se pudo reproducir el video:",
+            error
+          );
+
+        });
+
+    });
+
+
+    /* =====================================
+       CAMBIO DE ORIENTACIÓN
+    ===================================== */
+
+    window.addEventListener(
+      "resize",
+      seleccionarVideo
+    );
+
+
+    /* =====================================
+       AL TERMINAR → INDEX
+    ===================================== */
+
+    videoHorizontal.addEventListener(
+      "ended",
+      irAlIndex
+    );
+
+
+    videoVertical.addEventListener(
+      "ended",
+      irAlIndex
+    );
 
 
     function irAlIndex() {
+
       window.location.href = "index.html";
+
     }
 
   </script>
 
+
 </body>
+
 </html>
