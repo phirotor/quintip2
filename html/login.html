@@ -7,6 +7,9 @@
 
   <title>Proyecto Q´inti</title>
 
+  <!-- CSS del proyecto -->
+  <link rel="stylesheet" href="../css/style.css">
+
   <style>
 
     html,
@@ -16,8 +19,6 @@
 
       width: 100%;
       height: 100%;
-
-      background: #000;
 
       overflow: hidden;
     }
@@ -35,8 +36,6 @@
 
       z-index: 10;
 
-      background: #000;
-
       display: flex;
 
       justify-content: center;
@@ -51,7 +50,9 @@
 
       text-align: center;
 
-      color: white;
+      color: #028c8d;
+
+      padding: 30px;
     }
 
 
@@ -59,9 +60,12 @@
 
       font-size: 2.5rem;
 
-      margin-bottom: 25px;
+      margin-bottom: 30px;
 
       font-weight: bold;
+
+      text-shadow:
+        0 2px 5px rgba(0, 0, 0, 0.25);
     }
 
 
@@ -88,7 +92,7 @@
       font-weight: 600;
 
       box-shadow:
-        0 5px 20px rgba(174, 230, 255, 0.35);
+        0 5px 20px rgba(0, 0, 0, 0.2);
 
       transition: 0.2s;
     }
@@ -118,11 +122,10 @@
 
     video {
 
-      width: 100%;
+      width: 100vw;
+      height: 100vh;
 
-      height: 100%;
-
-      object-fit: contain;
+      object-fit: cover;
 
       display: none;
     }
@@ -139,12 +142,14 @@
        PANTALLA PARA INICIAR
   ===================================== -->
 
-  <div id="start-screen">
+  <div
+    id="start-screen"
+    class="background">
 
     <div class="start-content">
 
       <div class="start-title">
-        Proyecto Q´inti
+        Q´inti, ideas que vuelan
       </div>
 
       <div class="start-button">
@@ -154,6 +159,10 @@
         <span>Comenzar</span>
 
       </div>
+      <br><br><br>
+  <div class="start-title">
+    Conocimiento que protege
+  </div>
 
     </div>
 
