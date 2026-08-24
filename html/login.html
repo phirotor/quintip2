@@ -7,7 +7,6 @@
 
   <title>Proyecto Q´inti</title>
 
-  <!-- CSS del proyecto -->
   <link rel="stylesheet" href="../css/style.css">
 
   <style>
@@ -24,9 +23,6 @@
     }
 
 
-    /* =====================================
-       PANTALLA DE INICIO
-    ===================================== */
 
     #start-screen {
 
@@ -114,9 +110,6 @@
     }
 
 
-    /* =====================================
-       VIDEOS
-    ===================================== */
 
     .video-container {
 
@@ -152,9 +145,7 @@
 <body>
 
 
-  <!-- =====================================
-       PANTALLA PARA INICIAR
-  ===================================== -->
+
 
   <div
     id="start-screen"
@@ -186,10 +177,6 @@
   </div>
 
 
-
-  <!-- =====================================
-       VIDEOS
-  ===================================== -->
 
   <div class="video-container">
 
@@ -239,9 +226,7 @@
     let videoSeleccionado = null;
 
 
-    /* =====================================
-       SELECCIONAR VIDEO
-    ===================================== */
+
 
     function seleccionarVideo() {
 
@@ -274,21 +259,15 @@
     }
 
 
-    /* =====================================
-       INICIAR
-    ===================================== */
-
     startScreen.addEventListener("click", function() {
 
       seleccionarVideo();
 
 
-      // Ocultar pantalla inicial
 
       startScreen.style.display = "none";
 
 
-      // Reproducir video con sonido
 
       videoSeleccionado
         .play()
@@ -304,19 +283,11 @@
     });
 
 
-    /* =====================================
-       CAMBIO DE ORIENTACIÓN
-    ===================================== */
-
     window.addEventListener(
       "resize",
       seleccionarVideo
     );
 
-
-    /* =====================================
-       AL TERMINAR → INDEX
-    ===================================== */
 
     videoHorizontal.addEventListener(
       "ended",

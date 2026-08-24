@@ -1,12 +1,7 @@
-/* ---------------------------------------------
-   LOGIN / MAPA (SOLO LOGIN)
---------------------------------------------- */
 
-/* Stage responsive */
 .map-stage{
   position: relative;
 
-  /* clave: usa el límite entre ancho y alto */
   width: min(96vw, calc(92vh * (800 / 530)));
   aspect-ratio: 800 / 530;
 
@@ -20,18 +15,15 @@
     max-width: none;
   }
 }
-
-/* Imagen de fondo del mapa */
 .map-stage > img.mapa-bg{
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain; /* no recorta */
+  object-fit: contain; 
   display: block;
 }
 
-/* Pantalla login */
 #intro-screen{
   position: fixed;
   inset: 0;
@@ -49,7 +41,6 @@
   pointer-events: none;
 }
 
-/* SVG países */
 .countries{
   position: absolute;
   inset: 0;
@@ -80,7 +71,6 @@
   transform: scale(1.01);
 }
 
-/* Qinti volando hacia el logo */
 #qinti-fly{
   position: absolute;
   width: 70px;
@@ -94,9 +84,6 @@
   transition: all 2.5s ease-in-out;
 }
 
-/* ---------------------------------------------
-   QINTI (aleteo por capas)
---------------------------------------------- */
 
 .qinti-wrap{
   position: fixed;
@@ -152,7 +139,6 @@
   100% { transform: rotate(16deg); }
 }
 
-/* Logo del mapa (abajo, encima del mar) */
 #logo-ca{
   position: absolute;
   z-index: 6;
@@ -170,11 +156,11 @@
 }
 @media (max-width: 768px){
   #logo-ca{
-    top: 12%;              /* lo subes */
-    left: 50%;             /* centrado */
+    top: 12%;             
+    left: 50%;            
     transform: translate(-50%, -50%);
     
-    width: clamp(60px, 20vw, 110px); /* opcional: un poco más pequeño */
+    width: clamp(60px, 20vw, 110px); 
   }
 
   .logo-wrap{
@@ -185,12 +171,11 @@
 }
 @media (max-width: 768px){
   .qinti-wrap{
-    top: 18vh;   /* arriba pero no pegado */
+    top: 18vh;   
     left: 50%;
     transform: translateX(-50%);
   }
 }
-/* (Opcional) si usas un “anchor” para aterrizar exacto */
 .logo-wrap{
   position: absolute;
   left: 30%;
@@ -212,14 +197,12 @@
     transform: translate(-50%, -50%);
   }
 }
-/* Cursor SOLO en login (pisar el cursor:none global) */
 html, body,
 #intro-screen,
 #intro-screen *{
   cursor: url("img/puntero.png") 16 16, auto !important;
 }
 
-/* Si quieres que en hover NO cambie a mano (porque .country-shape tiene cursor:pointer) */
 .country-shape{
   cursor: inherit !important;
 }
