@@ -1,269 +1,296 @@
 
-const chatForm = document.getElementById("chatForm");
-const chatInput = document.getElementById("chatInput");
-const chatMessages = document.getElementById("chatMessages");
+import { pipeline } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.8.1";
 
-// Configuración de PDF.js
-pdfjsLib.GlobalWorkerOptions.workerSrc =
-  "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
-
-// Lista explícita de documentos autorizados
+// Solo se consultarán estos dos documentos.
 const documentosPermitidos = [
-  {
-    nombre: "Folleto: Marca, producto y servicio",
-    ruta: "../documentos/Folleto_Marca_Producto_Servicio.pdf"
-  },
-  {
-    nombre: "Registrar una marca",
-    ruta: "../documentos/Registrar_una_marca.pdf"
-  }
+    {
+        nombre: "Folleto: Marca, producto y servicio",
+        ruta: "../documentos/Folleto_Marca_Producto_Servicio.pdf"
+    },
+    {
+        nombre: "Registrar una marca",
+        ruta: "../documentos/Registrar_una_marca.pdf"
+    }
 ];
 
-let paginasIndexadas = [];
-let documentosListos = false;
+const mensajes = document.getElementById("chatMessages");
+const formulario = document.getElementById("chatForm");
+const entrada = document.getElementById("chatInput");
 
-// Palabras demasiado comunes para mejorar la búsqueda
-const palabrasIgnoradas = new Set([
-  "que", "como", "cual", "cuales", "cuando", "donde",
-  "una", "uno", "unos", "unas", "para", "por", "con",
-  "sin", "del", "las", "los", "una", "es", "son",
-  "de", "la", "el", "y", "o", "en", "un", "se",
-  "al", "mi", "me", "sobre", "puede", "pueden"
-]);
+let extractor = null;
+let fragmentos = [];
+let inicializacion = null;
+let ocupado = false;
 
-function normalizar(texto) {
-  return texto
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z0-9\s]/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-}
+// Divide el contenido en fragmentos más pequeños y manejables.
+function dividirEnFragmentos(texto, tamanoMaximo = 850) {
+    const parrafos = texto
+        .replace(/\s+/g, " ")
+        .split(/(?<=[.!?])\s+|(?<=;)\s+/)
+        .map(p => p.trim())
+        .filter(p => p.length > 35);
 
-function obtenerTerminos(texto) {
-  return normalizar(texto)
-    .split(" ")
-    .filter(palabra =>
-      palabra.length > 2 &&
-      !palabrasIgnoradas.has(palabra)
-    );
-}
+    const resultado = [];
+    let actual = "";
 
-// Mostrar texto de forma segura, sin interpretar HTML
-function agregarMensaje(texto, tipo) {
-  const mensaje = document.createElement("div");
-  mensaje.classList.add("chat-message", tipo);
-
-  if (tipo === "bot") {
-    const nombre = document.createElement("strong");
-    nombre.textContent = "Q´inti:";
-    mensaje.appendChild(nombre);
-    mensaje.appendChild(document.createElement("br"));
-    mensaje.appendChild(document.createTextNode(texto));
-  } else {
-    mensaje.textContent = texto;
-  }
-
-  chatMessages.appendChild(mensaje);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-}
-
-// Cargar y leer un PDF página por página
-async function cargarPDF(documento) {
-  const pdf = await pdfjsLib
-    .getDocument(documento.ruta)
-    .promise;
-
-  for (let numero = 1; numero <= pdf.numPages; numero++) {
-    const pagina = await pdf.getPage(numero);
-    const contenido = await pagina.getTextContent();
-
-    const texto = contenido.items
-      .map(item => item.str || "")
-      .join(" ")
-      .replace(/\s+/g, " ")
-      .trim();
-
-    if (texto) {
-      paginasIndexadas.push({
-        documento: documento.nombre,
-        ruta: documento.ruta,
-        pagina: numero,
-        texto: texto,
-        textoNormalizado: normalizar(texto)
-      });
-    }
-  }
-}
-
-// Preparar el índice una sola vez por carga de la página
-async function prepararDocumentos() {
-  if (!window.pdfjsLib) {
-    throw new Error("No se pudo cargar PDF.js.");
-  }
-
-  const resultados = await Promise.allSettled(
-    documentosPermitidos.map(cargarPDF)
-  );
-
-  const fallidos = resultados.filter(
-    resultado => resultado.status === "rejected"
-  );
-
-  documentosListos = true;
-
-  if (fallidos.length > 0) {
-    console.error("Algunos PDF no pudieron cargarse:", fallidos);
-  }
-
-  const cargados = resultados.length - fallidos.length;
-
-  if (cargados === 0) {
-    agregarMensaje(
-      "No pude cargar los documentos. Comprueba las rutas y abre Q´inti desde un servidor web.",
-      "bot"
-    );
-  } else {
-    agregarMensaje(
-      `Ya puedes preguntarme. He preparado ${paginasIndexadas.length} páginas de texto de los documentos disponibles.`,
-      "bot"
-    );
-  }
-}
-
-// Puntuar cada página según los términos de la pregunta
-function buscarEnDocumentos(pregunta) {
-  const terminos = [...new Set(obtenerTerminos(pregunta))];
-
-  if (terminos.length === 0) return [];
-
-  return paginasIndexadas
-    .map(pagina => {
-      let puntuacion = 0;
-
-      for (const termino of terminos) {
-        if (pagina.textoNormalizado.includes(termino)) {
-          puntuacion++;
+    for (const parrafo of parrafos) {
+        if (
+            actual.length + parrafo.length > tamanoMaximo &&
+            actual.length > 0
+        ) {
+            resultado.push(actual);
+            actual = "";
         }
-      }
 
-      // Priorizar páginas que contengan más términos consultados
-      const cobertura = puntuacion / terminos.length;
-
-      return { ...pagina, puntuacion, cobertura };
-    })
-    .filter(resultado => resultado.puntuacion > 0)
-    .sort((a, b) =>
-      b.cobertura - a.cobertura ||
-      b.puntuacion - a.puntuacion
-    )
-    .slice(0, 3);
-}
-
-// Mostrar resultados con enlaces a la página original del PDF
-function mostrarResultados(resultados, pregunta) {
-  const mensaje = document.createElement("div");
-  mensaje.classList.add("chat-message", "bot");
-
-  const titulo = document.createElement("strong");
-  titulo.textContent = "Q´inti:";
-  mensaje.appendChild(titulo);
-  mensaje.appendChild(document.createElement("br"));
-  mensaje.appendChild(document.createTextNode(
-    "Encontré estos fragmentos en los documentos autorizados:"
-  ));
-
-  for (const resultado of resultados) {
-    const bloque = document.createElement("p");
-    bloque.classList.add("mt-3", "mb-2");
-
-    const fuente = document.createElement("strong");
-    fuente.textContent =
-      `${resultado.documento} — página ${resultado.pagina}`;
-
-    const fragmento = document.createElement("div");
-    const texto = resultado.texto;
-  const terminos = obtenerTerminos(pregunta);
-    let posicion = -1;
-
-    for (const termino of terminos) {
-      posicion = normalizar(texto).indexOf(termino);
-      if (posicion >= 0) break;
+        actual += (actual ? " " : "") + parrafo;
     }
 
-    // Mostrar un fragmento de la página
-    const inicio = Math.max(0, (posicion < 0 ? 0 : posicion) - 180);
-    const fragmentoTexto = texto.slice(inicio, inicio + 650);
+    if (actual.length > 0) {
+        resultado.push(actual);
+    }
 
-    fragmento.textContent =
-      (inicio > 0 ? "… " : "") +
-      fragmentoTexto +
-      (inicio + 650 < texto.length ? " …" : "");
-
-    const enlace = document.createElement("a");
-    enlace.href = resultado.ruta;
-    enlace.target = "_blank";
-    enlace.rel = "noopener noreferrer";
-    enlace.textContent = "Abrir PDF";
-    enlace.classList.add("d-inline-block", "mt-1");
-
-    bloque.appendChild(fuente);
-    bloque.appendChild(fragmento);
-    bloque.appendChild(enlace);
-    mensaje.appendChild(bloque);
-  }
-
-  chatMessages.appendChild(mensaje);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
+    return resultado;
 }
 
-async function enviarPregunta(pregunta) {
-  pregunta = pregunta.trim();
-  if (!pregunta) return;
+// Extrae el texto de cada página del PDF.
+async function extraerPDF(documento) {
+    const respuesta = await fetch(documento.ruta);
 
-  agregarMensaje(pregunta, "user");
-  chatInput.value = "";
+    if (!respuesta.ok) {
+        throw new Error(
+            `No se pudo abrir ${documento.nombre}. Revisa la ruta del PDF.`
+        );
+    }
 
-  if (!documentosListos) {
-    agregarMensaje(
-      "Todavía estoy preparando los documentos. Espera un momento y vuelve a intentarlo.",
-      "bot"
-    );
-    return;
-  }
+    const datos = await respuesta.arrayBuffer();
+    const pdf = await window.pdfjsLib.getDocument({
+        data: datos
+    }).promise;
 
-  const resultados = buscarEnDocumentos(pregunta);
+    const resultado = [];
 
-  if (resultados.length === 0) {
-    agregarMensaje(
-      "No encontré coincidencias en los PDF autorizados. Prueba con otros términos o consulta los documentos originales.",
-      "bot"
-    );
-    return;
-  }
+    for (let numero = 1; numero <= pdf.numPages; numero++) {
+        const pagina = await pdf.getPage(numero);
+        const contenido = await pagina.getTextContent();
 
-mostrarResultados(resultados, pregunta);
+        const texto = contenido.items
+            .map(item => item.str)
+            .join(" ")
+            .replace(/\s+/g, " ")
+            .trim();
+
+        // Evita indexar páginas que solo contienen datos de contacto.
+        const esContacto =
+            /direcci[oó]n regional|central telef[oó]nica|tel[eé]fono|anexo\s+\d+/i
+                .test(texto) &&
+            texto.length < 1200;
+
+        if (!texto || esContacto) {
+            continue;
+        }
+
+        const partes = dividirEnFragmentos(texto);
+
+        for (const parte of partes) {
+            resultado.push({
+                texto: parte,
+                documento: documento.nombre,
+                pagina: numero
+            });
+        }
+    }
+
+    return resultado;
 }
 
-chatForm.addEventListener("submit", event => {
-  event.preventDefault();
-  enviarPregunta(chatInput.value);
-});
+// Convierte un texto en una representación numérica de su significado.
+async function obtenerVector(texto) {
+    const salida = await extractor(texto, {
+        pooling: "mean",
+        normalize: true
+    });
 
-// Mantener funcionando los botones de preguntas rápidas
-function preguntaRapida(pregunta) {
-  enviarPregunta(pregunta);
+    return salida.tolist()[0];
 }
 
-window.preguntaRapida = preguntaRapida;
+// Prepara el modelo y los documentos una sola vez por carga de página.
+async function prepararChatbot() {
+    if (inicializacion) {
+        return inicializacion;
+    }
 
-// Iniciar la lectura de documentos
-prepararDocumentos().catch(error => {
-  console.error("Error al preparar los PDF:", error);
-  documentosListos = true;
-  agregarMensaje(
-    "Ocurrió un error al leer los PDF. Revisa la consola del navegador para ver el detalle.",
-    "bot"
-  );
-});
+    inicializacion = (async () => {
+        mostrarMensaje(
+            "Estoy preparando el buscador y leyendo los documentos. " +
+            "La primera carga puede tardar un poco.",
+            "bot"
+        );
+
+        extractor = await pipeline(
+            "feature-extraction",
+            "Xenova/paraphrase-multilingual-MiniLM-L12-v2"
+        );
+
+        for (const documento of documentosPermitidos) {
+            const partes = await extraerPDF(documento);
+            fragmentos.push(...partes);
+        }
+
+        if (fragmentos.length === 0) {
+            throw new Error(
+                "No encontré texto en los documentos permitidos."
+            );
+        }
+
+        // Calcula los vectores de los fragmentos.
+        // Se procesa en grupos para evitar usar demasiada memoria.
+        const tamanoLote = 8;
+
+        for (let i = 0; i < fragmentos.length; i += tamanoLote) {
+            const lote = fragmentos.slice(i, i + tamanoLote);
+            const textos = lote.map(f => f.texto);
+
+            const salida = await extractor(textos, {
+                pooling: "mean",
+                normalize: true
+            });
+
+            const vectores = salida.tolist();
+
+            lote.forEach((fragmento, indice) => {
+                fragmento.vector = vectores[indice];
+            });
+        }
+    })();
+
+    try {
+        await inicializacion;
+    } catch (error) {
+        inicializacion = null;
+        throw error;
+    }
+}
+
+// Como los vectores están normalizados, su producto punto
+// permite estimar la similitud entre pregunta y fragmento.
+function calcularSimilitud(vectorA, vectorB) {
+    let suma = 0;
+
+    for (let i = 0; i < vectorA.length; i++) {
+        suma += vectorA[i] * vectorB[i];
+    }
+
+    return suma;
+}
+
+async function buscarFragmentos(pregunta) {
+    await prepararChatbot();
+
+    const vectorPregunta = await obtenerVector(pregunta);
+
+    return fragmentos
+        .map(fragmento => ({
+            ...fragmento,
+            puntuacion: calcularSimilitud(
+                vectorPregunta,
+                fragmento.vector
+            )
+        }))
+        .sort((a, b) => b.puntuacion - a.puntuacion)
+        .slice(0, 3);
+}
+
+// Muestra los mensajes de forma segura, sin interpretar HTML del PDF.
+function mostrarMensaje(texto, tipo) {
+    const burbuja = document.createElement("div");
+    burbuja.className = tipo === "usuario"
+        ? "mensaje usuario"
+        : "mensaje bot";
+
+    burbuja.textContent = texto;
+    mensajes.appendChild(burbuja);
+    mensajes.scrollTop = mensajes.scrollHeight;
+}
+
+function mostrarResultados(resultados) {
+    const contenedor = document.createElement("div");
+    contenedor.className = "mensaje bot";
+
+    const titulo = document.createElement("p");
+    titulo.textContent = "Encontré estos fragmentos relacionados:";
+    contenedor.appendChild(titulo);
+
+    // Umbral inicial conservador: evita mostrar coincidencias muy débiles.
+    const relevantes = resultados.filter(r => r.puntuacion >= 0.20);
+
+    if (relevantes.length === 0) {
+        const aviso = document.createElement("p");
+        aviso.textContent =
+            "No encontré un fragmento suficientemente relacionado " +
+            "en los documentos permitidos. Prueba formulando la pregunta " +
+            "de otra manera.";
+        contenedor.appendChild(aviso);
+    } else {
+        for (const resultado of relevantes) {
+            const bloque = document.createElement("div");
+            bloque.className = "resultado-documento";
+
+            const texto = document.createElement("p");
+            texto.textContent = resultado.texto;
+
+            const fuente = document.createElement("small");
+            fuente.textContent =
+                `Fuente: ${resultado.documento}, página ${resultado.pagina}`;
+
+            bloque.appendChild(texto);
+            bloque.appendChild(fuente);
+            contenedor.appendChild(bloque);
+        }
+    }
+
+    mensajes.appendChild(contenedor);
+    mensajes.scrollTop = mensajes.scrollHeight;
+}
+
+async function enviarPregunta(evento) {
+    if (evento) {
+        evento.preventDefault();
+    }
+
+    if (ocupado) return;
+
+    const pregunta = entrada.value.trim();
+    if (!pregunta) return;
+
+    entrada.value = "";
+    mostrarMensaje(pregunta, "usuario");
+
+    ocupado = true;
+
+    try {
+        const resultados = await buscarFragmentos(pregunta);
+        mostrarResultados(resultados);
+    } catch (error) {
+        console.error("Error del chatbot:", error);
+
+        mostrarMensaje(
+            "No pude consultar los documentos. Comprueba tu conexión, " +
+            "las rutas de los PDF y la consola del navegador para ver el error.",
+            "bot"
+        );
+    } finally {
+        ocupado = false;
+    }
+}
+
+// Estas funciones quedan disponibles para los botones existentes del HTML.
+window.enviarPregunta = enviarPregunta;
+
+window.preguntaRapida = function (pregunta) {
+    entrada.value = pregunta;
+    enviarPregunta();
+};
+
+if (formulario) {
+    formulario.addEventListener("submit", enviarPregunta);
+}
